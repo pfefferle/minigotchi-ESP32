@@ -90,6 +90,27 @@ public:
   static void loadConfig();
   static void saveConfig();
 
+  // MQTT Configuration
+  static const char* mqttServer;
+  static int mqttPort;
+  static const char* mqttUser;
+  static const char* mqttPassword;
+  static const char* mqttClientId;
+  static bool mqttEnabled;
+  static const char* mqttStateTopic;
+  static const char* mqttPwnagotchiTopic;
+  static const char* mqttDiscoveryPrefix;
+  static const char* mqttDeviceName;
+  static const char* mqttDeviceId;
+  static const char* mqttDeviceManufacturer;
+  static const char* mqttDeviceModel;
+  static const char* mqttDeviceVersion;
+
+  // WLAN Client Configuration
+  static const char* wlanSsid;
+  static const char* wlanPassword;
+  static bool wlanEnabled;
+
 private:
   static int random(int min, int max);
   static int time();

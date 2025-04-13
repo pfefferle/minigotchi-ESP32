@@ -40,6 +40,11 @@ bool Config::spam = true;
 const char *Config::ssid = "minigotchi";
 const char *Config::pass = "dj1ch-minigotchi";
 
+// WLAN Client Configuration
+const char* Config::wlanSsid = "your-wifi-ssid";
+const char* Config::wlanPassword = "your-wifi-password";
+bool Config::wlanEnabled = false;
+
 // define universal delays
 int Config::shortDelay = 500;
 int Config::longDelay = 5000;
@@ -110,6 +115,24 @@ bool Config::configured = false;
 
 // define version(please do not change, this should not be changed)
 std::string Config::version = "3.5.2-beta";
+
+// MQTT Configuration
+const char* Config::mqttServer = "your-mqtt-broker.com";
+int Config::mqttPort = 1883;
+const char* Config::mqttUser = "your-username";
+const char* Config::mqttPassword = "your-password";
+const char* Config::mqttClientId = "minigotchi";
+bool Config::mqttEnabled = false;
+
+// MQTT Topics
+const char* Config::mqttStateTopic = "minigotchi/state";
+const char* Config::mqttPwnagotchiTopic = "minigotchi/pwnagotchi";
+const char* Config::mqttDiscoveryPrefix = "homeassistant";
+const char* Config::mqttDeviceName = "Minigotchi";
+const char* Config::mqttDeviceId = "minigotchi";
+const char* Config::mqttDeviceManufacturer = "dj1ch";
+const char* Config::mqttDeviceModel = "Minigotchi";
+const char* Config::mqttDeviceVersion = "3.5.2-beta";
 
 /**
  * Loads configuration values from NVS

@@ -39,6 +39,8 @@
 #include "parasite.h"
 #include "pwnagotchi.h"
 #include "webui.h"
+#include "mqtt.h"
+#include "wlan.h"
 #include <Arduino.h>
 #include <WiFi.h>
 #include <esp_wifi.h>

@@ -156,6 +156,20 @@ void Minigotchi::boot() {
     waitForInput();
   }
 
+  // Initialize WLAN if enabled
+  if (Config::wlanEnabled) {
+    WLAN::setup();
+
+    // Initialize MQTT if enabled and WLAN is configured
+    if (Config::mqttEnabled) {
+      MQTT::setup();
+    }
+  } else {
+    Serial.println(mood.getBroken() + " MQTT requires WLAN to be enabled!");
+    Display::updateDisplay(mood.getBroken(), "MQTT needs WLAN!");
+    Config::mqttEnabled = false; // Disable MQTT since WLAN is not available
+  }
+
   Deauth::list();
   Channel::init(Config::channel);
   Minigotchi::info();
@@ -288,8 +302,18 @@ void Minigotchi::monStop() {
  * Channel cycling
  */
 void Minigotchi::cycle() {
+  // Handle WLAN connection if enabled
+  if (Config::wlanEnabled) {
+    WLAN::loop();
+  }
+
   Parasite::readData();
   Channel::cycle();
+
+  // Publish state to MQTT if both MQTT and WLAN are enabled and connected
+  if (Config::mqttEnabled && Config::wlanEnabled && WLAN::isConnected()) {
+    MQTT::publishState();
+  }
 }
 
 /**
@@ -298,6 +322,11 @@ void Minigotchi::cycle() {
 void Minigotchi::detect() {
   Parasite::readData();
   Pwnagotchi::detect();
+
+  // If pwnagotchi detected and both MQTT and WLAN are enabled and connected
+  if (pwnagotchiDetected && Config::mqttEnabled && Config::wlanEnabled && WLAN::isConnected()) {
+    MQTT::publishPwnagotchiDetected(pwnagotchiName);
+  }
 }
 
 /**
